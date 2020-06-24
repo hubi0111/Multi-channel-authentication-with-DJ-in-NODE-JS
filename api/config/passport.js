@@ -1,4 +1,3 @@
-// load all the things we need
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -7,7 +6,6 @@ var OauthUser = require('../app/models/OauthUser');
 var User = require('../app/models/User')
 
 var configAuth = require('./auth');
-const e = require('express');
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
@@ -34,10 +32,10 @@ module.exports = function (passport) {
                     if (err)
                         return done(err);
                     if (!user)
-                        return done(null, false, req.flash('loginMessage', 'No user found.'));
+                        return done(null, false);
 
                     if (!user.validPassword(password)) {
-                        return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+                        return done(null, false);
                     } else {
                         User.findOne({ 'email': email }, function (err, user1) {
                             req.session.user = user1;
@@ -66,7 +64,7 @@ module.exports = function (passport) {
                     if (err)
                         return done(err);
                     if (user) {
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                        return done(null, false);
                     } else {
                         var newUser = new OauthUser();
                         newUser.email = email;
@@ -90,7 +88,7 @@ module.exports = function (passport) {
         }));
 
     // FACEBOOK 
-    var fbStrategy = configAuth.facebookAuth;
+    var fbStrategy = configAuth.facebook;
     fbStrategy.passReqToCallback = true;
     passport.use(new FacebookStrategy(fbStrategy,
         function (req, token, refreshToken, profile, done) {
@@ -139,9 +137,9 @@ module.exports = function (passport) {
     // GOOGLE 
     passport.use(new GoogleStrategy({
 
-        clientID: configAuth.googleAuth.clientID,
-        clientSecret: configAuth.googleAuth.clientSecret,
-        callbackURL: configAuth.googleAuth.callbackURL,
+        clientID: configAuth.google.clientID,
+        clientSecret: configAuth.google.clientSecret,
+        callbackURL: configAuth.google.callbackURL,
         passReqToCallback: true
     },
         function (req, token, refreshToken, profile, done) {

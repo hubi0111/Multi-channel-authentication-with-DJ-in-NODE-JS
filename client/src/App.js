@@ -5,7 +5,6 @@ import './App.css';
 
 import indexComponent from './components/indexComponent'
 import homeComponent from './components/homeComponent'
-import loginComponent from './components/loginComponent'
 import signupComponent from './components/signupComponent'
 import errorComponent from './components/errorComponent'
 
@@ -18,7 +17,6 @@ class App extends Component {
              <Route path="/" component={indexComponent} exact/>
              <Route path="/profile" component={homeComponent} />
              <Route path="/signup" component={signupComponent} />
-             <Route path="/login" component={loginComponent} />
              <Route path="/error" component={errorComponent} />
            </Switch>
         </div> 
