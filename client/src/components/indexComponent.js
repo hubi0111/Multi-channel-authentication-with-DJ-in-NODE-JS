@@ -13,7 +13,6 @@ class indexComponent extends Component {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange = event => {
@@ -26,23 +25,6 @@ class indexComponent extends Component {
         });
     };
 
-    handleSubmit(event) {
-        event.preventDefault();
-        axios
-            .get('http://localhost:9000/auth/local/callback', {
-                params: {
-                    email: this.state.email,
-                    password: this.state.password
-                }
-            })
-            .then(() =>
-                this.props.history.push('/profile')
-            )
-            .catch(err => {
-                this.props.history.push('/error')
-            });
-    };
-
     render() {
         return (
             <div className="row row-container">
@@ -50,7 +32,7 @@ class indexComponent extends Component {
                     <h1><span className="fa fa-sign-in"></span>Login</h1>
                 </div>
                 <div className="col-sm-6 col-sm-offset-3">
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form >
                         <FormGroup row>
                             <Label htmlFor="email" md={2}>Email</Label>
                             <Col md={10}>
@@ -69,7 +51,7 @@ class indexComponent extends Component {
                         </FormGroup>
                         <FormGroup row>
                             <Col md={{ size: 10, offset: 2 }}>
-                                <Button type="submit" color="warning">
+                                <Button href={'http://localhost:9000/auth/local/callback?email='+this.state.email+'&password='+this.state.password} color="warning">
                                     Login
                                 </Button>
                             </Col>

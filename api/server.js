@@ -44,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(flash()); 
 
-var routes = require('./app/routes/routes.js')(passport); 
+var routes = require('./app/routes/routes.js')(); 
 app.use('/', routes);
 
 app.listen(port);
