@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body {
+            padding-top: 80px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="page-header text-center">
+            <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+            <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3><span class="fa fa-user"></span> Local</h3>
+
+                    <% if (user.email) { %>
+                    <p>
+                        <strong>id</strong>: <%= user._id %><br>
+                        <strong>email</strong>: <%= user.email %><br>
+                        <strong>password</strong>: <%= user.password %>
+                    </p>
+
+                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                    <% } else { %>
+                    <a href="/auth/local/" class="btn btn-default">Login Local</a>
+                    <% } %>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
+                    <% if (user.facebook.token) { %>
+                    <p>
+                        <strong>id</strong>: <%= user.facebook.id %><br>
+                        <strong>token</strong>: <%= user.facebook.token %><br>
+                        <strong>name</strong>: <%= user.facebook.name %><br>
+                    </p>
+
+                    <a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
+                    <% } else { %>
+                    <a href="/auth/facebook" class="btn btn-primary">Login Facebook</a>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="well">
+                    <h3 class="text-danger"><span class="fa fa-google-plus"></span> Google+</h3>
+
+                    <% if (user.google.token) { %>
+                    <p>
+                        <strong>id</strong>: <%= user.google.id %><br>
+                        <strong>token</strong>: <%= user.google.token %><br>
+                        <strong>name</strong>: <%= user.google.name %>
+                    </p>
+
+                    <a href="/unlink/google" class="btn btn-danger">Unlink</a>
+                    <% } else { %>
+                    <a href="/auth/google" class="btn btn-danger">Login Google</a>
+                    <% } %>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
