@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Col, Alert } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+
+const validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 class signupComponent extends Component {
     constructor(props) {
@@ -8,19 +10,29 @@ class signupComponent extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errors: {
+                email: ''
+            }
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleInputChange = event => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        const { name, value } = event.target;
+        let errors = this.state.errors;
+
+        switch (name) {
+            case 'email':
+                errors.email = !validEmailRegex.test(value) ? 'Not a Valid Email' : '';
+                break;
+        }
+
+        this.setState({ errors, [name]: value })
 
         this.setState({
-            [name]: value
+            [name]: value,
         });
     };
 
@@ -34,15 +46,21 @@ class signupComponent extends Component {
                     <Form>
                         <FormGroup row>
                             <Label htmlFor="email" md={2}>Email</Label>
-                            <Col md={10}>
+                            <Col md={7}>
                                 <Input type="email" id="email" name="email"
                                     value={this.state.email}
                                     onChange={this.handleInputChange} />
                             </Col>
+                            <Col md={3}>
+                                {this.state.errors.email.length > 0 &&
+                                    <Alert color="danger">
+                                        {this.state.errors.email}
+                                    </Alert>}
+                            </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label htmlFor="password" md={2}>Password</Label>
-                            <Col md={10}>
+                            <Col md={7}>
                                 <Input type="password" id="password" name="password"
                                     value={this.state.password}
                                     onChange={this.handleInputChange} />
@@ -50,7 +68,7 @@ class signupComponent extends Component {
                         </FormGroup>
                         <FormGroup row>
                             <Col md={{ size: 10, offset: 2 }}>
-                                <Button href={'http://localhost:9000/auth/local/callback?email=' + this.state.email + '&password=' + this.state.password} color="warning">
+                                <Button href={'http://localhost:9005/auth/signup/callback?email=' + this.state.email + '&password=' + this.state.password} color="warning">
                                     Sign Up
                                 </Button>
                             </Col>

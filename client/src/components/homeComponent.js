@@ -9,7 +9,7 @@ const home = () => {
                 <p>Welcome! You have been authenticated</p>
             </div>
             <div>
-                <Button href="http://localhost:9000/logout" color="warning">Logout</Button>
+                <Button href="http://localhost:9005/logout" color="warning">Logout</Button>
             </div>
         </div>
     );
