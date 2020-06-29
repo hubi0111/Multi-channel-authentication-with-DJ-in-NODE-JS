@@ -1,5 +1,5 @@
-var OauthUser = require('../app/models/OauthUser');
-var User = require('../app/models/User');
+var OauthUser = require('../models/OauthUser');
+var User = require('../models/User');
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {

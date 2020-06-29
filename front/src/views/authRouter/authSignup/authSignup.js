@@ -3,8 +3,15 @@ import { Button, Form, FormGroup, Label, Input, Col, Alert } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 const validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach(
+        (val) => val.length > 0 && (valid = false)
+    );
+    return valid;
+}
 
-class indexComponent extends Component {
+class signupComponent extends Component {
     constructor(props) {
         super(props);
 
@@ -16,6 +23,7 @@ class indexComponent extends Component {
             }
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange = event => {
@@ -35,14 +43,22 @@ class indexComponent extends Component {
         });
     };
 
+    handleSubmit = event => {
+        event.preventDefault();
+
+        if (validateForm(this.state.errors)) {
+            window.location.replace(`http://localhost:9005/auth/signup/callback?email=${this.state.email}&password=${this.state.password}`);
+        }
+    };
+
     render() {
         return (
             <div className="row row-container">
                 <div className="col-12">
-                    <h1><span className="fa fa-sign-in"></span>Login</h1>
+                    <h1><span className="fa fa-sign-in"></span>Sign Up</h1>
                 </div>
                 <div className="col-sm-6 col-sm-offset-3">
-                    <Form>
+                    <Form onSubmit = {this.handleSubmit}>
                         <FormGroup row>
                             <Label htmlFor="email" md={2}>Email</Label>
                             <Col md={7}>
@@ -67,21 +83,20 @@ class indexComponent extends Component {
                         </FormGroup>
                         <FormGroup row>
                             <Col md={{ size: 10, offset: 2 }}>
-                                <Button href={'http://localhost:9005/auth/local/callback?email=' + this.state.email + '&password=' + this.state.password} color="warning">
-                                    Login
+                                <Button type = 'submit' color="warning">
+                                    Sign Up
                                 </Button>
-                                <Button href="http://localhost:9005/auth/facebook/" color="primary"><span className="fa fa-facebook"></span>Facebook Login</Button>
-                                <Button href="http://localhost:9005/auth/google/" color="danger"><span className="fa fa-google"></span>Google Login</Button>
                             </Col>
                         </FormGroup>
                     </Form>
                     <Col md={{ size: 10, offset: 2 }}>
-                        <NavLink to="/signup">Signup</NavLink>
+                        <NavLink to="/auth">Login</NavLink>
                     </Col>
                 </div>
+
             </div>
         );
     }
 }
 
-export default indexComponent;
+export default signupComponent;

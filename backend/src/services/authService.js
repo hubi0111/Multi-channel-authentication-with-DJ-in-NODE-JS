@@ -8,14 +8,14 @@ module.exports = (passport) => {
     auth.authenticateCallback = (req, res) => {
         var method = req.params.method
         passport.authenticate(method, {
-            successRedirect: 'http://localhost:3005/profile', //currently connected to frontend
-            failureRedirect: 'http://localhost:3005/error' //currently connected to frontend
+            successRedirect: 'http://localhost:3005/auth/home', //redirect to home page
+            failureRedirect: 'http://localhost:3005/auth/error' //redirect to error page
         })(req, res)
     }
 
     auth.logout = (req, res) => {
         req.logout();
-        res.redirect('http://localhost:3005/'); //currently connected to frontend
+        res.redirect('http://localhost:3005/'); //redirect to login page
     }
 
     return auth;

@@ -1,5 +1,5 @@
 module.exports = (app, passport) => {
-    var pageController = require('../controllers/pageController')(passport);
+    var pageController = require('../services/authService')(passport);
 
     // LOGOUT
     app.get('/logout', pageController.logout);

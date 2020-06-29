@@ -1,6 +1,6 @@
 var LocalStrategy = require('passport-local').Strategy;
-var OauthUser = require('../app/models/OauthUser');
-var User = require('../app/models/User')
+var OauthUser = require('../models/OauthUser');
+var User = require('../models/User')
 
 module.exports = (passport) => {
     passport.use('local', new LocalStrategy({

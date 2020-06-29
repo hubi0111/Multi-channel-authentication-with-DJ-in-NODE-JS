@@ -11,7 +11,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var config = require('./config/database');
+var config = require('./src/configs/database');
 var url = config.url;
 var connect = mongoose.connect(url, {
   useNewUrlParser: true
@@ -21,7 +21,7 @@ connect.then((db) => {
   console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
 
-require('./config/passport')(passport);
+require('./src/configs/passport')(passport);
 
 app.use(session({
   secret: 'verysecretkey',
@@ -44,6 +44,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-require('./app/routes/routes.js')(app, passport);
+require('./src/controllers/authController.js')(app, passport);
 
 app.listen(port);
