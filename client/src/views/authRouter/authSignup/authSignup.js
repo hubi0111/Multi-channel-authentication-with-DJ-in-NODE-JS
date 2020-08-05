@@ -18,6 +18,8 @@ class signupComponent extends Component {
         this.state = {
             email: '',
             password: '',
+            username: '',
+            auto: false,
             errors: {
                 email: ''
             }
@@ -27,7 +29,9 @@ class signupComponent extends Component {
     }
 
     handleInputChange = event => {
-        const { name, value } = event.target;
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
         let errors = this.state.errors;
 
         switch (name) {
@@ -47,7 +51,7 @@ class signupComponent extends Component {
         event.preventDefault();
 
         if (validateForm(this.state.errors)) {
-            window.location.replace(`http://localhost:3000/auth/signup/callback?email=${this.state.email}&password=${this.state.password}`);
+            window.location.replace(`http://localhost:3000/auth/signup/callback?email=${this.state.email}&username=${this.state.username}&password=${this.state.password}&auto=${this.state.auto}`);
         }
     };
 
@@ -58,7 +62,7 @@ class signupComponent extends Component {
                     <h1><span className="fa fa-sign-in"></span>Sign Up</h1>
                 </div>
                 <div className="col-sm-6 col-sm-offset-3">
-                    <Form onSubmit = {this.handleSubmit}>
+                    <Form onSubmit={this.handleSubmit}>
                         <FormGroup row>
                             <Label htmlFor="email" md={2}>Email</Label>
                             <Col md={7}>
@@ -74,6 +78,16 @@ class signupComponent extends Component {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
+                            <Label htmlFor="username" md={2}>Username</Label>
+                            <Col md={7}>
+                                <Input type="username" id="username" name="username"
+                                    value={this.state.username}
+                                    onChange={this.handleInputChange} />
+                            </Col>
+                            <Col md={3}>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
                             <Label htmlFor="password" md={2}>Password</Label>
                             <Col md={7}>
                                 <Input type="password" id="password" name="password"
@@ -82,8 +96,16 @@ class signupComponent extends Component {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
+                            <Label htmlFor="auto" md={2}>Auto?</Label>
+                            <Col md={7}>
+                                <Input type="checkbox" id="auto" name="auto"
+                                    value={this.state.password}
+                                    onChange={this.handleInputChange} />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
                             <Col md={{ size: 10, offset: 2 }}>
-                                <Button type = 'submit' color="warning">
+                                <Button type='submit' color="warning">
                                     Sign Up
                                 </Button>
                             </Col>

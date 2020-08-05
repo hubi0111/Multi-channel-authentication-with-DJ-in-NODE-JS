@@ -51,6 +51,10 @@ class indexComponent extends Component {
         }
     };
 
+    componentDidMount(){
+        window.location.replace(`http://localhost:3000/auth/auto/callback`);
+    }
+
     render() {
         return (
             <div className="row row-container">
