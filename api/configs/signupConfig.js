@@ -19,7 +19,9 @@ module.exports = (passport) => {
                     } else {
                         var newUser = new OauthUser();
                         newUser.email = email;
+                        newUser.username = req.query.username
                         newUser.password = newUser.generateHash(password);
+                        newUser.auto = req.query.auto
                         newUser.save(function (err) {
                             if (err) {
                                 return done(err);

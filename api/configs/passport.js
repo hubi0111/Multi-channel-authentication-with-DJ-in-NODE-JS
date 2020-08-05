@@ -13,6 +13,7 @@ module.exports = function (passport) {
 
     require('./localConfig')(passport);
     require('./signupConfig')(passport);
+    require('./autoConfig')(passport);
     require('./facebookConfig')(passport);
     require('./googleConfig')(passport);
 };
